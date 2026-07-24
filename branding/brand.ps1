@@ -236,11 +236,8 @@ if ($RunnerRc) {
         }
     }
 
-    Set-Content `
-        -Path $RunnerRc `
-        -Value $rc `
-        -Encoding Unicode `
-        -NoNewline
+    $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($RunnerRc, $rc, $Utf8NoBom)
 
     Write-Host "[OK] Metadados do executável Windows" -ForegroundColor Green
 }
