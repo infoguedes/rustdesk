@@ -235,7 +235,28 @@ if ($RunnerRc) {
             )
         }
     }
+# Corrige o fechamento do bloco de versao do Windows
+if ($rc -notmatch 'BLOCK\s+"VarFileInfo"') {
 
+    $Marker = '#endif    // English (United States) resources'
+
+    $VersionBlockEnd = @'
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+'@
+
+    if ($rc.Contains($Marker)) {
+        $rc = $rc.Replace($Marker, $VersionBlockEnd + $Marker)
+        Write-Host "[OK] Bloco VarFileInfo corrigido"
+    }
+    else {
+        throw "Nao foi encontrado o marcador final do Runner.rc."
+    }
+}
     $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
     [System.IO.File]::WriteAllText($RunnerRc, $rc, $Utf8NoBom)
 
