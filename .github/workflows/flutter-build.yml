@@ -117,7 +117,21 @@ jobs:
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           submodules: recursive
+      - name: Apply GT Connect branding
+        if: ${{ inputs.upload-tag == 'guedes' }}
+        shell: pwsh
+        run: |
+          Write-Host "=================================="
+          Write-Host " Applying GT Connect Branding"
+          Write-Host "=================================="
 
+          if (!(Test-Path ".\branding\brand.ps1")) {
+              throw "branding\brand.ps1 não encontrado."
+          }
+
+          .\branding\brand.ps1
+
+          Write-Host "Branding aplicado com sucesso."
       - name: Restore bridge files
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
