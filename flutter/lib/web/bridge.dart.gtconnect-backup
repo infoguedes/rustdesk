@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:js' as js;
 import 'dart:convert';
 import 'dart:typed_data';
@@ -1608,8 +1608,8 @@ class RustdeskImpl {
   }
 
   bool isCustomClient({dynamic hint}) {
-    // is_custom_client() checks if app name is not "GT Connect"
-    return mainGetAppNameSync(hint: hint) != "GT Connect";
+    // is_custom_client() checks if app name is not "RustDesk"
+    return mainGetAppNameSync(hint: hint) != "RustDesk";
   }
 
   bool isDisableSettings({dynamic hint}) {
